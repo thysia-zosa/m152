@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Graphics</title>
+    <style>
+      .reihe {
+        display: flex;
+        width: 100%;
+        max-height: 480px;
+        justify-content: space-evenly;
+      }
+
+      .reihenelement {
+        max-height: inherit;
+        margin: 5px;
+        max-width: -moz-available;
+        max-width: -webkit-fill-available;
+        max-width: available;
+      }
+
+      .reihenelement canvas {
+        max-width: 100%;
+        max-height: inherit;
+        height: 100%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Canvas</h1>
+    <div class="reihe">
+      <div class="reihenelement">
+        <canvas id="sonnensystem" width="500" height="500"></canvas>
+      </div>
+      <div class="reihenelement">
+        <canvas id="fraktal" width="1000" height="800"></canvas>
+      </div>
+    </div>
+    <script src="sonnensystem.js"></script>
+    <br>
+    <script src="fraktal.js"></script>
+  </body>
+
+</html>

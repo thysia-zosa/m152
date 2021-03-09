@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="rubik.css">
+  <title>Rubikwürfel</title>
+  <script src="rubik.js"></script>
+</head>
+<body onload="sortPieces()">
+  <div id="rubikCube">
+    <div id="north" class="bigLine">
+      <div id="northWest" class="bigOne"></div>
+      <div id="northHalfWest" class="bigOne bigBorder">
+        <div id="northHalfWestTop" class="line">
+          <div id="northHalfWestTopLeft" class="smallOne"></div>
+          <div id="northHalfWestTopCenter" class="smallOne"></div>
+          <div id="northHalfWestTopRight" class="smallOne"></div>
+        </div>
+        <div id="northHalfWestCenter" class="line">
+          <div id="northHalfWestCenterLeft" class="smallOne"></div>
+          <div id="northHalfWestCenterCenter" class="smallOne"></div>
+          <div id="northHalfWestCenterRight" class="smallOne"></div>
+        </div>
+        <div id="northHalfWestDown" class="line">
+          <div id="northHalfWestDownLeft" class="smallOne"></div>
+          <div id="northHalfWestDownCenter" class="smallOne"></div>
+          <div id="northHalfWestDownRight" class="smallOne"></div>
+        </div>
+      </div>
+      <div id="northHalfEast" class="bigOne"></div>
+      <div id="northEast" class="bigOne"></div>
+    </div>
+    <div id="center" class="bigLine">
+      <div id="centerWest" class="bigOne bigBorder">
+        <div id="centerWestTop" class="line">
+          <div id="centerWestTopLeft" class="smallOne"></div>
+          <div id="centerWestTopCenter" class="smallOne"></div>
+          <div id="centerWestTopRight" class="smallOne"></div>
+        </div>
+        <div id="centerWestCenter" class="line">
+          <div id="centerWestCenterLeft" class="smallOne"></div>
+          <div id="centerWestCenterCenter" class="smallOne"></div>
+          <div id="centerWestCenterRight" class="smallOne"></div>
+        </div>
+        <div id="centerWestDown" class="line">
+          <div id="centerWestDownLeft" class="smallOne"></div>
+          <div id="centerWestDownCenter" class="smallOne"></div>
+          <div id="centerWestDownRight" class="smallOne"></div>
+        </div>
+      </div>
+      <div id="centerHalfWest" class="bigOne bigBorder">
+        <div id="centerHalfWestTop" class="line">
+          <div id="centerHalfWestTopLeft" class="smallOne"></div>
+          <div id="centerHalfWestTopCenter" class="smallOne"></div>
+          <div id="centerHalfWestTopRight" class="smallOne"></div>
+        </div>
+        <div id="centerHalfWestCenter" class="line">
+          <div id="centerHalfWestCenterLeft" class="smallOne"></div>
+          <div id="centerHalfWestCenterCenter" class="smallOne"></div>
+          <div id="centerHalfWestCenterRight" class="smallOne"></div>
+        </div>
+        <div id="centerHalfWestDown" class="line">
+          <div id="centerHalfWestDownLeft" class="smallOne"></div>
+          <div id="centerHalfWestDownCenter" class="smallOne"></div>
+          <div id="centerHalfWestDownRight" class="smallOne"></div>
+        </div>
+      </div>
+      <div id="centerHalfEast" class="bigOne bigBorder">
+        <div id="centerHalfEastTop" class="line">
+          <div id="centerHalfEastTopLeft" class="smallOne"></div>
+          <div id="centerHalfEastTopCenter" class="smallOne"></div>
+          <div id="centerHalfEastTopRight" class="smallOne"></div>
+        </div>
+        <div id="centerHalfEastCenter" class="line">
+          <div id="centerHalfEastCenterLeft" class="smallOne"></div>
+          <div id="centerHalfEastCenterCenter" class="smallOne"></div>
+          <div id="centerHalfEastCenterRight" class="smallOne"></div>
+        </div>
+        <div id="centerHalfEastDown" class="line">
+          <div id="centerHalfEastDownLeft" class="smallOne"></div>
+          <div id="centerHalfEastDownCenter" class="smallOne"></div>
+          <div id="centerHalfEastDownRight" class="smallOne"></div>
+        </div>
+      </div>
+      <div id="centerEast" class="bigOne bigBorder">
+        <div id="centerEastTop" class="line">
+          <div id="centerEastTopLeft" class="smallOne"></div>
+          <div id="centerEastTopCenter" class="smallOne"></div>
+          <div id="centerEastTopRight" class="smallOne"></div>
+        </div>
+        <div id="centerEastCenter" class="line">
+          <div id="centerEastCenterLeft" class="smallOne"></div>
+          <div id="centerEastCenterCenter" class="smallOne"></div>
+          <div id="centerEastCenterRight" class="smallOne"></div>
+        </div>
+        <div id="centerEastDown" class="line">
+          <div id="centerEastDownLeft" class="smallOne"></div>
+          <div id="centerEastDownCenter" class="smallOne"></div>
+          <div id="centerEastDownRight" class="smallOne"></div>
+        </div>
+      </div>
+    </div>
+    <div id="south" class="bigLine">
+      <div id="southWest" class="bigOne"></div>
+      <div id="southHalfWest" class="bigOne bigBorder">
+        <div id="southHalfWestTop" class="line">
+          <div id="southHalfWestTopLeft" class="smallOne"></div>
+          <div id="southHalfWestTopCenter" class="smallOne"></div>
+          <div id="southHalfWestTopRight" class="smallOne"></div>
+        </div>
+        <div id="southHalfWestCenter" class="line">
+          <div id="southHalfWestCenterLeft" class="smallOne"></div>
+          <div id="southHalfWestCenterCenter" class="smallOne"></div>
+          <div id="southHalfWestCenterRight" class="smallOne"></div>
+        </div>
+        <div id="southHalfWestDown" class="line">
+          <div id="southHalfWestDownLeft" class="smallOne"></div>
+          <div id="southHalfWestDownCenter" class="smallOne"></div>
+          <div id="southHalfWestDownRight" class="smallOne"></div>
+        </div>
+      </div>
+      <div id="southHalfEast" class="bigOne"></div>
+      <div id="southEast" class="bigOne"></div>
+    </div>
+  </div>
+
+  <div id="buttonlist">
+    <button onclick="sortPieces()">SortPieces</button>
+    <button onclick="mixPieces()">MixPieces</button>
+    <button onclick="leftUp()">LeftUp</button>
+    <button onclick="leftDown()">LeftDown</button>
+    <button onclick="rightUp()">RightUp</button>
+    <button onclick="rightDown()">RightDown</button>
+    <button onclick="topLeft()">TopLeft</button>
+    <button onclick="topRight()">TopRight</button>
+    <button onclick="downLeft()">DownLeft</button>
+    <button onclick="downRight()">DownRight</button>
+    <button onclick="frontCounterclockwise()">FrontCCWise</button>
+    <button onclick="frontClockwise()">FrontCWise</button>
+    <button onclick="backCounterclockwise()">BackCCWise</button>
+    <button onclick="backClockwise()">BackCWise</button>
+    <button onclick="globalUp()">GlobalUp</button>
+    <button onclick="globalDown()">GlobalDown</button>
+    <button onclick="globalLeft()">GlobalLeft</button>
+    <button onclick="globalRight()">GlobalRight</button>
+    <button onclick="globalCounterclockwise()">GlobalCCWise</button>
+    <button onclick="globalClockwise()">GlobalCWise</button>
+  </div>
+</body>
+</html>

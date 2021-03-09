@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalable Vector Graphics</title>
+  </head>
+
+  <body>
+    <h1>SVGraphics</h1>
+
+    <div>
+      <svg width="200" height="200">
+        <circle cx="100" cy="100" r="98" stroke="blue" stroke-width="4" fill="white" />
+        <text x="96" y="20" transform="rotate(30 100, 100)">I</text>
+        <text x="93" y="20" transform="rotate(60 100, 100)">II</text>
+        <text x="90" y="20" transform="rotate(90 100, 100)">III</text>
+        <text x="90" y="20" transform="rotate(120 100, 100)">IV</text>
+        <text x="93" y="20" transform="rotate(150 100, 100)">V</text>
+        <text x="90" y="20" transform="rotate(180 100, 100)">VI</text>
+        <text x="87" y="20" transform="rotate(210 100, 100)">VII</text>
+        <text x="84" y="20" transform="rotate(240 100, 100)">VIII</text>
+        <text x="90" y="20" transform="rotate(270 100, 100)">IX</text>
+        <text x="93" y="20" transform="rotate(300 100, 100)">X</text>
+        <text x="90" y="20" transform="rotate(330 100, 100)">XI</text>
+        <text x="87" y="20" transform="rotate(0 100, 100)">XII</text>
+        <rect id="minute" width="4" height="96" x="98" y="4" fill="red" />
+        <rect id="hour" width="4" height="80" x="98" y="20" fill="yellow" />
+      </svg>
+    </div>
+    <script>
+      let y = 0;
+      let minute = document.getElementById('minute');
+      let hour = document.getElementById('hour');
+      window.setInterval(function() {
+        y += 1;
+        minute.setAttribute('transform', 'rotate(' + y + ', 100, 100)');
+        hour.setAttribute('transform', 'rotate(' + y / 12 + ', 100, 100)');
+      }, 10);
+    </script>
+  </body>
+
+</html>
