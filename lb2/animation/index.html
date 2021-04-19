@@ -16,6 +16,7 @@
     <div id="menu"></div>
     <script src="/lb2/js/menu.js"></script>
     <h1>Animationen</h1>
+    <h2>Sonnenstandanzeiger mit Canvas</h2>
     <canvas id="sonnenuhr" width="1000" height="400"></canvas>
     <p>
         <label class="label" for="day">Tag im Jahr: </label>
@@ -29,17 +30,43 @@
         <input type="range" id="lat" name="lat" min="-90" max="90" value="0">
     </p>
 
-    <!-- <p>
-      Sonnenaufgang:
-      <span id="sunRise"></span>
+    <script src="sonnenuhr.js"></script>
+    <p>Die Animation zeigt vereinfacht den Stand der Sonne in ° über 24 Stunden, beginnend und endend um 18.00 Uhr, wobei 12:00 Uhr der tatsächliche Sonnenhöchststand darstellt. Das Datum und die Geographische Breite lassen sich manuel einstellen. <br> Canvas
+        eignet sich hierbei gut, weil die Kurve bei jeder Einstellungsänderung neu berechnet und als durchgehende Linie gezeichnet werden muss.
     </p>
 
-    <p>
-      Sonnenuntergang:
-      <span id="sunSet"></span>
-    </p> -->
+    <h2>Kompass mit SVG</h2>
+    <div id="kompass">
+        <svg width="160" height="190">
 
-    <script src="sonnenuhr.js"></script>
+
+            <g id="windrose">
+                <path id="tips"
+                    d="M 80 30 100 90 160 110 100 130 80 190 60 130 0 110 60 90 80 30"
+                    style="stroke:none;stroke-width:0;fill:#d82323" />
+
+                <ellipse id="circle" cx="80" cy="110" rx="60" ry="60"
+                    style="stroke:none;stroke-width:0;fill:#d82323" />
+            </g>
+
+            <g id="arrow">
+                <path d="M 80,110 30,160 80,40 130,160 80,110"
+                    style="stroke:none;fill:black" />
+
+                <path d="M 80,106 37.5,149 80,47 80,106"
+                    style="stroke:none;fill:white" />
+            </g>
+        </svg>
+
+    </div>
+    <script src="svg.js"></script>
+    <p>
+        SVGs können, einmal gezeichnet, wiederverwendet werden; mit Hilfe von JS können sie kreativ "bewegt" werden, jedoch ist das Zeichnen (Rendern) langsamer als bei Canvas. Für das Erstellen einer Graphik ist eine Hilfssoftware sehr zu empfehlen, da es schnell
+        sehr komplex und umfangreich wird.
+    </p>
+
+    <!-- TODO: CSS-Animationen -->
+    <!-- TODO: Die verschiedenen Techniken wurden miteinander verglichen und bewertet (Einsatzmöglichkeiten, Aufwand, etc.) -->
 </body>
 
 </html>
