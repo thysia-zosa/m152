@@ -1,0 +1,47 @@
+body {
+    font-family: serif, sans-serif;
+}
+
+#menu {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #555;
+}
+
+.menuItem {
+    background-color: #bbb;
+    width: 8em;
+    margin: 0.5em;
+    text-align: center;
+    line-height: 2em;
+    text-decoration: none;
+    color: black;
+}
+
+.menuItem:hover {
+    background-color: #ddd;
+}
+
+#menu>a.active {
+    background-color: #888;
+    color: white;
+}
+
+#sonnenuhr {
+    max-width: 100%;
+}
+
+.label {
+    display: inline-block;
+    min-width: 200px;
+}
+
+.valueText {
+    display: inline-block;
+    min-width: 50px;
+}
+
+input {
+    width: 500px;
+    max-width: 95vw;
+}

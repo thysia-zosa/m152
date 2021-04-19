@@ -1,44 +1,35 @@
 <!DOCTYPE html>
 <html lang="de-CH">
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Animationen</title>
     <style>
-      .label {
-        display: inline-block;
-        min-width: 200px;
-      }
 
-      .valueText {
-        display: inline-block;
-        min-width: 50px;
-      }
-
-      input {
-        width: 500px;
-      }
     </style>
-  </head>
+    <link rel="stylesheet" href="/lb2/css/style.css">
+</head>
 
-  <body>
+<body>
+    <div id="menu"></div>
+    <script src="/lb2/js/menu.js"></script>
     <h1>Animationen</h1>
     <canvas id="sonnenuhr" width="1000" height="400"></canvas>
     <p>
-      <label class="label" for="day">Tag im Jahr: </label>
-      <span id="dayText" class="valueText">21.3</span>
-      <input type="range" id="day" name="day" min="1" max="365" value="80">
+        <label class="label" for="day">Tag im Jahr: </label>
+        <span id="dayText" class="valueText">21.3</span>
+        <input type="range" id="day" name="day" min="1" max="365" value="80">
     </p>
 
     <p>
-      <label class="label" for="latitude">Geographische Breite: </label>
-      <span id="latText" class="valueText">0°</span>
-      <input type="range" id="lat" name="lat" min="-90" max="90" value="0">
+        <label class="label" for="latitude">Geographische Breite: </label>
+        <span id="latText" class="valueText">0°</span>
+        <input type="range" id="lat" name="lat" min="-90" max="90" value="0">
     </p>
 
-    <p>
+    <!-- <p>
       Sonnenaufgang:
       <span id="sunRise"></span>
     </p>
@@ -46,9 +37,9 @@
     <p>
       Sonnenuntergang:
       <span id="sunSet"></span>
-    </p>
+    </p> -->
 
-    <script src="sonnenuhr.js" ></script>
-  </body>
+    <script src="sonnenuhr.js"></script>
+</body>
 
 </html>
