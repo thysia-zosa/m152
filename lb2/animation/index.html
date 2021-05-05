@@ -1,72 +1,84 @@
 <!DOCTYPE html>
 <html lang="de-CH">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Animationen</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Animationen</title>
+        <style>
 
-    </style>
-    <link rel="stylesheet" href="/lb2/css/style.css">
-</head>
+        </style>
+        <link rel="stylesheet" href="/lb2/css/style.css">
+    </head>
 
-<body>
-    <div id="menu"></div>
-    <script src="/lb2/js/menu.js"></script>
-    <h1>Animationen</h1>
-    <h2>Sonnenstandanzeiger mit Canvas</h2>
-    <canvas id="sonnenuhr" width="1000" height="400"></canvas>
-    <p>
-        <label class="label" for="day">Tag im Jahr: </label>
-        <span id="dayText" class="valueText">21.3</span>
-        <input type="range" id="day" name="day" min="1" max="365" value="80">
-    </p>
+    <body>
+        <div id="menu"></div>
+        <script src="/lb2/js/menu.js"></script>
+        <h1>Animationen</h1>
+        <h2>Sonnenstandanzeiger mit Canvas</h2>
+        <canvas id="sonnenuhr" width="1000" height="400"></canvas>
+        <p>
+            <label class="label" for="day">Tag im Jahr: </label>
+            <span id="dayText" class="valueText">21.3</span>
+            <input type="range" id="day" name="day" min="1" max="365" value="80">
+        </p>
 
-    <p>
-        <label class="label" for="latitude">Geographische Breite: </label>
-        <span id="latText" class="valueText">0°</span>
-        <input type="range" id="lat" name="lat" min="-90" max="90" value="0">
-    </p>
+        <p>
+            <label class="label" for="latitude">Geographische Breite: </label>
+            <span id="latText" class="valueText">0°</span>
+            <input type="range" id="lat" name="lat" min="-90" max="90" value="0">
+        </p>
 
-    <script src="sonnenuhr.js"></script>
-    <p>Die Animation zeigt vereinfacht den Stand der Sonne in ° über 24 Stunden, beginnend und endend um 18.00 Uhr, wobei 12:00 Uhr der tatsächliche Sonnenhöchststand darstellt. Das Datum und die Geographische Breite lassen sich manuel einstellen. <br> Canvas
-        eignet sich hierbei gut, weil die Kurve bei jeder Einstellungsänderung neu berechnet und als durchgehende Linie gezeichnet werden muss.
-    </p>
+        <script src="sonnenuhr.js"></script>
+        <p>Die Animation zeigt vereinfacht den Stand der Sonne in ° über 24 Stunden, beginnend und endend um 18.00 Uhr,
+            wobei 12:00 Uhr der tatsächliche Sonnenhöchststand darstellt. Das Datum und die Geographische Breite lassen
+            sich manuel einstellen. <br> Canvas
+            eignet sich hierbei gut, weil die Kurve bei jeder Einstellungsänderung neu berechnet und als durchgehende
+            Linie gezeichnet werden muss.
+        </p>
 
-    <h2>Kompass mit SVG</h2>
-    <div id="kompass">
-        <svg width="160" height="190">
+        <h2>Kompass mit SVG und Scroll-Animation</h2>
+        <div id="kompass">
+            <svg width="160" height="190">
 
 
-            <g id="windrose">
-                <path id="tips"
-                    d="M 80 30 100 90 160 110 100 130 80 190 60 130 0 110 60 90 80 30"
-                    style="stroke:none;stroke-width:0;fill:#d82323" />
+                <g id="windrose">
+                    <path id="tips" d="M 80 30 100 90 160 110 100 130 80 190 60 130 0 110 60 90 80 30"
+                        style="stroke:none;stroke-width:0;fill:#d82323" />
 
-                <ellipse id="circle" cx="80" cy="110" rx="60" ry="60"
-                    style="stroke:none;stroke-width:0;fill:#d82323" />
-            </g>
+                    <ellipse id="circle" cx="80" cy="110" rx="60" ry="60"
+                        style="stroke:none;stroke-width:0;fill:#d82323" />
+                </g>
 
-            <g id="arrow">
-                <path d="M 80,110 30,160 80,40 130,160 80,110"
-                    style="stroke:none;fill:black" />
+                <g id="arrow">
+                    <path d="M 80,110 30,160 80,40 130,160 80,110" style="stroke:none;fill:black" />
 
-                <path d="M 80,106 37.5,149 80,47 80,106"
-                    style="stroke:none;fill:white" />
-            </g>
-        </svg>
+                    <path d="M 80,106 37.5,149 80,47 80,106" style="stroke:none;fill:white" />
+                </g>
+            </svg>
 
-    </div>
-    <script src="svg.js"></script>
-    <p>
-        SVGs können, einmal gezeichnet, wiederverwendet werden; mit Hilfe von JS können sie kreativ "bewegt" werden, jedoch ist das Zeichnen (Rendern) langsamer als bei Canvas. Für das Erstellen einer Graphik ist eine Hilfssoftware sehr zu empfehlen, da es schnell
-        sehr komplex und umfangreich wird.
-    </p>
+        </div>
+        <script src="svg.js"></script>
+        <p>
+            SVGs können, einmal gezeichnet, wiederverwendet werden; mit Hilfe von JS können sie kreativ "bewegt" werden,
+            jedoch ist das Zeichnen (Rendern) langsamer als bei Canvas. Für das Erstellen einer Graphik ist eine
+            Hilfssoftware sehr zu empfehlen, da es schnell
+            sehr komplex und umfangreich wird. SVGs eignen sich optimal für Texte.
+        </p>
+        <p>
+            Die Scroll-Animation bei diesem Beispiel stellt keine typische Verwendung dar (schrittweises Anzeigen von
+            neuem Inhalt)
+        </p>
 
-    <!-- TODO: CSS-Animationen -->
-    <!-- TODO: Die verschiedenen Techniken wurden miteinander verglichen und bewertet (Einsatzmöglichkeiten, Aufwand, etc.) -->
-</body>
+        <h2>CSS-Animation</h2>
+        <style>
+        </style>
+        <div class="back">
+            <div class="ball"></div>
+        </div>
+        <p>Eine kleine CSS-Animations-Spielerei; reines CSS eignet sich für kleine und schnelle Animationen. Es ist schnell zu schreiben, erreicht aber auch schnell seine Grenzen. Aber: Schaut <a href="https://keithclark.co.uk/labs/css-fps/nojs/">hier</a>! </p>
+
+    </body>
 
 </html>

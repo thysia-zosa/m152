@@ -13,7 +13,23 @@
     <div id="menu"></div>
     <script src="/lb2/js/menu.js"></script>
     <h1>Audio</h1>
-    <!-- TODO: Integration von Sound in den wichtigsten Formaten mit Infos und Bewertung -->
+    <audio controls>
+        <source src="senf.m4a" type="audio/m4a">
+        <source src="senf.mp3" type="audio/mp3">
+        <source src="senf.ogg" type="audio/ogg">
+        <source src="senf.wav" type="audio/wav">
+    </audio>
+    <p>Es ist zwar nochmals dasselbe Klanginventar wie in der LB1, diesmal jedoch in vier Formaten (der Browser nimmt das Erstbeste, womit er was anfangen kann):</p>
+    <dl>
+        <dt>m4a</dt>
+        <dd>Das ursprüngliche Format dieser Datei, ein Apple-Produkt. Es kann auch im Internet funktionieren, generell wird aber davon abgeraten.</dd>
+        <dt>mp3</dt>
+        <dd>Der Klassiker unter den Formaten: es ist beliebig komprimier-, aber irgendwann nicht mehr hörbar. Und leider ist es proprietär. </dd>
+        <dt>Ogg audio</dt>
+        <dd>Frei verfügbares Kompressionsformat à la mp3, wird eher selten gebraucht. </dd>
+        <dt>Wave</dt>
+        <dd>Der reine, ungekürzte und vor Allem unkomprimierte Sound: Kann schnell viel Platz brauchen (und Ladedauer).</dd>
+    </dl>
 </body>
 
 </html>

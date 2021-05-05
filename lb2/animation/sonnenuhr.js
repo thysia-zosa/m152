@@ -59,4 +59,3 @@ day.addEventListener('input', drawLine);
 lat.addEventListener('input', drawLine);
 
 drawLine();
-console.log('ready');
