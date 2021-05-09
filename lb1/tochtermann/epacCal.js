@@ -2,13 +2,17 @@
  * gibt alle Klassenelemente von "Mine" zurück.
  */
 let mine = document.getElementsByClassName("Mine");
+let date;
+let isSet = false;
+let isSetDay;
+let isDay;
 let weekdays = [
   "Κυριακή",
   "Δευτέρα",
   "Τρίτη",
   "Τετάρτη",
   "Πέμπτη",
-  "Παρασκευη",
+  "Παρασκευή",
   "Σάββατον",
 ]
 let months = [
@@ -44,9 +48,13 @@ let miliSeconds;
 let greekDate;
 let miliSecsSinceSun;
 let nightDayTime;
+let partTime;
 let hours;
 let minutes;
 let seconds;
+let stundenzeiger = document.getElementById('stunde');
+let minutenzeiger = document.getElementById('minute');
+let sekundenzeiger = document.getElementById('sekunde');
 
 /**
  * eine vereinfachte Form für die Abrundung.
@@ -59,12 +67,14 @@ function floor(x) {
  * Gibt das Lunisolardatum zurück in Form von "01.01.7525". Der Tag beginnt um 18:00 am Vorabend (mittlerer Sonnenuntergang).
  */
 function getToday(date) {
-  date.setHours(date.getHours() + 6);
+  if ((date.getTime() % 86400000) > sunSet) {
+    date.setDate(date.getDate() + 1);
+  }
   let myYear = date.getFullYear();
   let myMonth = date.getMonth();
   let myDay = date.getDate();
   let result = getMyDate(myYear, myMonth, myDay);
-  return [weekdays[date.getDay()] + ", ἡ " + greek(result[0]) + " τοῦ " + months[result[1] - 1], "ἔτῃ τῇ τοῦ κόσμου " + greek(result[2])];
+  return [weekdays[date.getDay()] + ", ἡ " + greek(result[0]) + " τοῦ " + months[result[1] - 1], "ἔτει τῷ τοῦ κόσμου " + greek(result[2])];
 }
 
 /**
@@ -435,54 +445,55 @@ function getDate(date) {
 /**
  * Wählt den für die Stunde passenden Gruss aus.
  */
-function getGreeting(date) {
+function getGreeting() {
   let greetings = [
+    "Καλὴν ἑσπέραν",
+    "Καλὴν νύκτα",
     "Καλὸν ὕπνον",
-    "Καλὰ ἡμερούδια",
+    "Καλὴν αὐγήν",
     "Καλὴν ἡμέραν",
     "Χαῖρε",
     "Καλὸν ἀπόγευμα",
-    "Καλὴν ἑσπέραν",
-    "Καλὴν νύκτα"
   ]
   let greeting;
-  switch (date.getHours()) {
+  let dayNightHour = isDay ? 12 : 0;
+  switch (hours + dayNightHour) {
+    case 22:
+    case 23:
     case 0:
     case 1:
-    case 2:
       greeting = greetings[0];
       break;
+    case 2:
     case 3:
     case 4:
-    case 5:
       greeting = greetings[1];
       break;
+    case 5:
     case 6:
     case 7:
     case 8:
-    case 9:
       greeting = greetings[2];
       break;
+    case 9:
     case 10:
     case 11:
-    case 12:
-    case 13:
       greeting = greetings[3];
       break;
+    case 12:
+    case 13:
     case 14:
+      greeting = greetings[4];
+      break;
     case 15:
     case 16:
     case 17:
-      greeting = greetings[4];
-      break;
     case 18:
+      greeting = greetings[5];
+      break;
     case 19:
     case 20:
     case 21:
-      greeting = greetings[5];
-      break;
-    case 22:
-    case 23:
       greeting = greetings[6];
       break;
 
@@ -502,7 +513,9 @@ function getHalfDay(day) {
  * Wird alle 60 Sekunden ausgeführt.
  */
 function setDate() {
-  let date = new Date();
+  isSet = true;
+  isSetDay = isDay ? true : false;
+  let newDate = date;
   dayInYear = getDayInYear(date.getFullYear(), date.getMonth(), date.getDate());
   // epsilon = getEpsilon(dayInYear);
   // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
@@ -511,11 +524,10 @@ function setDate() {
   sunSet = 43200000 - delay + halfDay;
   sunSetBefore = 43200000 - delay + getHalfDay(dayInYear - 1);
   sunRiseNext = 43200000 - delay - getHalfDay(dayInYear + 1);
-  mine[3].innerHTML = getGreeting(date);
   greekDate = getToday(date);
   mine[0].innerHTML = greekDate[0];
   mine[2].innerHTML = greekDate[1];
-  setTimeout(setDate, 60000)
+  // setTimeout(setDate, 60000)
 }
 
 /**
@@ -523,10 +535,14 @@ function setDate() {
  * Wird alle 200 Milisekunden ausgeführt.
  */
 function setTime() {
-  let date = new Date();
+  date = new Date();
   miliSeconds = date.getTime() % 86400000;
+  if (!isSet) {
+    setDate();
+  }
   mine[1].innerHTML = getSunTime();
-  setTimeout(setTime, 200);
+  mine[3].innerHTML = getGreeting(date);
+  setTimeout(setTime, 100);
 }
 
 function getSunTime() {
@@ -543,26 +559,44 @@ function getSunTime() {
   hours = floor(nightDayTime / 3600);
   minutes = floor(nightDayTime / 60) % 60;
   seconds = nightDayTime % 60;
+  stundenzeiger.setAttribute('transform', 'rotate(' + 360 * partTime + ', 3080, 9709)')
+  minutenzeiger.setAttribute('transform', 'rotate(' + 4320 * partTime + ', 3080, 9709)')
+  sekundenzeiger.setAttribute('transform', 'rotate(' + 259200 * partTime + ', 3080, 9709)')
   return twoCijfers(hours) + ":" + twoCijfers(minutes) + ":" + twoCijfers(seconds);
 }
 
 function beforeSunRise() {
   // return "vor Sonnenaufgang";
+  isDay = false;
+  if (isSetDay) {
+    isSet = false;
+  }
   let halfNight = 86400000 - halfDay - getHalfDay(dayInYear - 1);
   miliSecsSinceSun = miliSeconds - sunSetBefore + 86400000;
+  partTime = miliSecsSinceSun / halfNight / 2;
   nightDayTime = floor(43200 * miliSecsSinceSun / halfNight);
 }
 
 function atDayTime() {
   // return "am Tag";
+  isDay = true;
+  if (!isSetDay) {
+    isSet = false;
+  }
   miliSecsSinceSun = miliSeconds - sunRise;
+  partTime = miliSecsSinceSun / halfDay / 2;
   nightDayTime = floor(21600 * miliSecsSinceSun / halfDay);
 }
 
 function afterSunSet() {
   // return "nach Sonnenuntergang";
+  isDay = false;
+  if (isSetDay) {
+    isSet = false;
+  }
   let halfNight = 86400000 - halfDay - getHalfDay(dayInYear + 1);
   miliSecsSinceSun = miliSeconds - sunSet;
+  partTime = miliSecsSinceSun / halfNight / 2;
   nightDayTime = floor(43200 * miliSecsSinceSun / halfNight);
 }
 
@@ -573,5 +607,5 @@ const twoCijfers = (number) => {
     return number;
 }
 
-setDate();
+// setDate();
 setTime();
