@@ -34,8 +34,6 @@ const phi = 47.475683 * Math.PI / 180;
 // Abweichung von der mittleren Zeitzone
 const delay = 1973388;
 let dayInYear;
-// // Abweichung vom mittleren Sonnenauf- / -untergangswinkel
-// let epsilon;
 // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
 let halfDay;
 // Zeitpunkt von Sonnenauf-/untergang
@@ -50,11 +48,8 @@ let miliSecsSinceSun;
 let nightDayTime;
 let partTime;
 let hours;
-let minutes;
-let seconds;
 let stundenzeiger = document.getElementById('stunde');
 let minutenzeiger = document.getElementById('minute');
-let sekundenzeiger = document.getElementById('sekunde');
 
 /**
  * eine vereinfachte Form für die Abrundung.
@@ -514,10 +509,8 @@ function getHalfDay(day) {
  */
 function setDate() {
   isSet = true;
-  isSetDay = isDay ? true : false;
   let newDate = date;
   dayInYear = getDayInYear(date.getFullYear(), date.getMonth(), date.getDate());
-  // epsilon = getEpsilon(dayInYear);
   // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
   halfDay = getHalfDay(dayInYear);
   sunRise = 43200000 - delay - halfDay;
@@ -526,8 +519,7 @@ function setDate() {
   sunRiseNext = 43200000 - delay - getHalfDay(dayInYear + 1);
   greekDate = getToday(date);
   mine[0].innerHTML = greekDate[0];
-  mine[2].innerHTML = greekDate[1];
-  // setTimeout(setDate, 60000)
+  mine[1].innerHTML = greekDate[1];
 }
 
 /**
@@ -537,12 +529,10 @@ function setDate() {
 function setTime() {
   date = new Date();
   miliSeconds = date.getTime() % 86400000;
-  if (!isSet) {
-    setDate();
-  }
-  mine[1].innerHTML = getSunTime();
-  mine[3].innerHTML = getGreeting(date);
-  setTimeout(setTime, 100);
+  setDate();
+  getSunTime();
+  mine[2].innerHTML = getGreeting();
+  setTimeout(setTime, 1000);
 }
 
 function getSunTime() {
@@ -557,55 +547,31 @@ function getSunTime() {
     afterSunSet();
   }
   hours = floor(nightDayTime / 3600);
-  minutes = floor(nightDayTime / 60) % 60;
-  seconds = nightDayTime % 60;
   stundenzeiger.setAttribute('transform', 'rotate(' + 360 * partTime + ', 3080, 9709)')
   minutenzeiger.setAttribute('transform', 'rotate(' + 4320 * partTime + ', 3080, 9709)')
-  sekundenzeiger.setAttribute('transform', 'rotate(' + 259200 * partTime + ', 3080, 9709)')
-  return twoCijfers(hours) + ":" + twoCijfers(minutes) + ":" + twoCijfers(seconds);
 }
 
 function beforeSunRise() {
-  // return "vor Sonnenaufgang";
   isDay = false;
-  if (isSetDay) {
-    isSet = false;
-  }
   let halfNight = 86400000 - halfDay - getHalfDay(dayInYear - 1);
   miliSecsSinceSun = miliSeconds - sunSetBefore + 86400000;
-  partTime = miliSecsSinceSun / halfNight / 2;
+  partTime = miliSecsSinceSun / halfNight;
   nightDayTime = floor(43200 * miliSecsSinceSun / halfNight);
 }
 
 function atDayTime() {
-  // return "am Tag";
   isDay = true;
-  if (!isSetDay) {
-    isSet = false;
-  }
   miliSecsSinceSun = miliSeconds - sunRise;
   partTime = miliSecsSinceSun / halfDay / 2;
   nightDayTime = floor(21600 * miliSecsSinceSun / halfDay);
 }
 
 function afterSunSet() {
-  // return "nach Sonnenuntergang";
   isDay = false;
-  if (isSetDay) {
-    isSet = false;
-  }
   let halfNight = 86400000 - halfDay - getHalfDay(dayInYear + 1);
   miliSecsSinceSun = miliSeconds - sunSet;
-  partTime = miliSecsSinceSun / halfNight / 2;
+  partTime = miliSecsSinceSun / halfNight;
   nightDayTime = floor(43200 * miliSecsSinceSun / halfNight);
 }
 
-const twoCijfers = (number) => {
-    if (number < 10) {
-        return '0' + number;
-    }
-    return number;
-}
-
-// setDate();
 setTime();
