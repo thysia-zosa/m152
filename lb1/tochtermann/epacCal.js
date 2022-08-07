@@ -27,6 +27,7 @@ let months = [
   "Χασελεύου",
   "Τηβήθου",
   "Σαβάτεως",
+  "Ἀδᾶρος",
   "Δευτεραδᾶρος",
 ];
 // nördliche Breite
@@ -66,7 +67,7 @@ function getToday(date) {
     date.setDate(date.getDate() + 1);
   }
   let myYear = date.getFullYear();
-  let myMonth = date.getMonth();
+  let myMonth = date.getMonth() + 1;
   let myDay = date.getDate();
   let result = getMyDate(myYear, myMonth, myDay);
   return [weekdays[date.getDay()] + ", ἡ " + greek(result[0]) + " τοῦ " + months[result[1] - 1], "ἔτει τῷ τοῦ κόσμου " + greek(result[2])];
@@ -214,7 +215,7 @@ function getMyDate(year, month, day) {
   let epactGrowth = (30 + epact - getEpact(year - 1, getGoldenNumber(year - 1))) % 30;
   let dayInYear = getDayInYear(year, month, day);
   let epactDay = getEpactDay(epactGrowth, goldenNumber, epact, dayInYear);
-  let epactMonth = getEpactMonth(goldenNumber, epact, dayInYear, epactDay, epactGrowth);
+  let epactMonth = getEpactMonth(epact, dayInYear, epactDay, epactGrowth);
   let epactYear = getEpactYear(year, dayInYear, epactDay);
   return [epactDay, epactMonth, epactYear];
 }
@@ -260,24 +261,13 @@ function isLeapYear(year) {
  * Gibt zurück, der wievielte Tag des Jahres das Datum ist. In Schaltjahren wird der 24. und 25. Februar als 1 Tag gezählt.
  */
 function getDayInYear(year, month, day) {
-  let months = [
-    0,
-    31,
-    59,
-    90,
-    120,
-    151,
-    181,
-    212,
-    243,
-    273,
-    304,
-    334,
-  ];
-  if (isLeapYear(year) && month === 1 && day > 24) {
-    day--;
-  }
-  return months[month] + day;
+  let ly = isLeapYear(year);
+  let t = ly ? 1 : 2;
+  let firstTerm = floor((275 * month) / 9);
+  let secondTerm = t * floor((month + 9) / 12);
+  let result = firstTerm - secondTerm + day - 30;
+  result -= ly && result > 55 ? 1 : 0;
+  return result;
 }
 
 /**
@@ -295,100 +285,42 @@ function getEpactDay(epactGrowth, goldenNumber, epact, dayInYear) {
   // TODO: Wofür das Ganze?
   if (initial < 31) {
     // bei einer doppelt erhöhten Epaktenerhöhung wird 1 zusätzlich abgezogen.
-    if (epactGrowth > 12 && epact > 2) {
-      initial--;
+    if (epactGrowth > 11) {
+      initial += 11 - epactGrowth;
+      if (epact < 2 && goldenNumber === 1 || epact === 0) {
+        initial += 1;
+      }
     }
     // Zieht im 1 Jahr des 19erZyklusses 1 ab, da dann die Epakte 12 statt 11 erhöht wird.
-    return initial - (goldenNumber > 1 ? 0 : 1);
+    return initial;
   }
 
   // Zwei sukzessive Mondmonate dauern 30 + 29 = 59 Tage. Berechnet wird der Rest nach Abzug der geraden Anzahl Monate.
-  let twoMonthRest = (initial - 1) % 59 + 1;
+  let twoMonthRest = (initial - 31) % 59 + 1;
   // Falls die Epakte < 25 oder die "schwarze 25" ist, hat der ungerade Monat 30, der gerade Monat 29 Tage; ansonsten ist es umgekehrt.
   if (epact < 25 || (epact = 25 && goldenNumber > 11)) {
-    return (twoMonthRest - 1) % 30 + 1;
-  } else {
     if (twoMonthRest < 30) {
       return twoMonthRest;
     } else {
       return twoMonthRest - 29;
     }
+  } else {
+    return (twoMonthRest - 1) % 30 + 1;
   }
 }
 
 /**
  * Gibt den Mondmonat im Lunisolarjahr an, beginnend mit dem Paschamond.
  */
-function getEpactMonth(goldenNumber, epact, dayInYear, epactDay, epactGrowth) {
+function getEpactMonth(epact, dayInYear, epactDay, epactGrowth) {
   // Der Tag im Jahr, an dem der Monat begonnen hat.
   let beginOfMonth = dayInYear - epactDay;
   let month;
-  // Verteilung der Monatsanfänge im Normaljahr.
-  switch (true) {
-    case (beginOfMonth < -4):
-      month = 10;
-      break;
-    case (beginOfMonth < 26):
-      month = 11;
-      break;
-    case (beginOfMonth < 55):
-      month = 12;
-      break;
-    case (beginOfMonth < 66):
-      month = 13;
-      break;
-    case (beginOfMonth < 95):
-      month = 1;
-      break;
-    case (beginOfMonth < 125):
-      month = 2;
-      break;
-    case (beginOfMonth < 154):
-      month = 3;
-      break;
-    case (beginOfMonth < 184):
-      month = 4;
-      break;
-    case (beginOfMonth < 213):
-      month = 5;
-      break;
-    case (beginOfMonth < 243):
-      month = 6;
-      break;
-    case (beginOfMonth < 272):
-      month = 7;
-      break;
-    case (beginOfMonth < 302):
-      month = 8;
-      break;
-    case (beginOfMonth < 331):
-      month = 9;
-      break;
-    default:
-      month = 10;
-  }
-
-  // Sonderregeln für Sonderjahre
-  if (beginOfMonth < 55) {
-    switch (epactGrowth) {
-      case 13:
-        if (epact < 7 && epact > 4) {
-          month++;
-        }
-        break;
-      case 12:
-        if (epact === 5) {
-          month++;
-        }
-        break;
-      case 10:
-        if (epact === 4) {
-          month--;
-        }
-        break;
-      default:
-
-    }
+  if (beginOfMonth > 65) {
+    month = Math.round((beginOfMonth - 66 + (epact + 6) % 30) / 29.5);
+  } else {
+    var oldEpact = (epact + 30 - epactGrowth) % 30;
+    month = Math.round((beginOfMonth + 299 + (oldEpact + 6) % 30) / 29.5);
   }
   return month;
 }
@@ -510,7 +442,7 @@ function getHalfDay(day) {
 function setDate() {
   isSet = true;
   let newDate = date;
-  dayInYear = getDayInYear(date.getFullYear(), date.getMonth(), date.getDate());
+  dayInYear = getDayInYear(date.getFullYear(), date.getMonth() + 1, date.getDate());
   // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
   halfDay = getHalfDay(dayInYear);
   sunRise = 43200000 - delay - halfDay;

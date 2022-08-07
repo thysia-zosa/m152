@@ -67,17 +67,17 @@
   <path id="minute" d="M3062 11764 c-21 -169 -28 -429 -28 -1109 l-1 -759 -32 -19 c-124 -73 -126 -248 -4 -323 l47 -30 7 -191 c4 -106 10 -241 14 -302 l6 -110 30 0 30 0 6 200 c4 110 7 248 8 306 l1 107 30 12 c42 17 87 72 100 121 22 81 -22 179 -94 213 l-36 17 0 432 c0 667 -17 1193 -46 1430 -8 61 -31 64 -38 5z m62 -2020 c34 -34 -6 -90 -48 -68 -35 19 -20 80 20 80 9 0 21 -5 28 -12z"/>
   <path id="stunde" d="M3062 10945 c-10 -15 -27 -574 -25 -825 l1 -219 -35 -18 c-78 -40 -119 -128 -98 -209 16 -59 51 -104 101 -127 32 -15 40 -23 41 -48 13 -250 14 -258 31 -269 35 -21 43 6 46 159 3 141 4 143 27 149 35 9 83 54 107 99 42 84 3 204 -80 243 l-38 19 -12 475 c-13 515 -18 573 -44 578 -9 2 -19 -1 -22 -7z m52 -1203 c34 -34 -6 -90 -48 -68 -35 19 -20 80 20 80 9 0 21 -5 28 -12z"/>
   <path id="nagel" d="M3029 9826 c-106 -60 -65 -228 54 -228 112 0 167 126 89 205 -36 35 -102 46 -143 23z"/>
-<text transform="rotate(-150, 3080, 9709)" y="7800" x="2908">Α</text>
-<text transform="rotate(-120, 3080, 9709)" y="7800" x="2920">Β</text>
-<text transform="rotate(-90, 3080, 9709)" y="7800" x="2937">Γ</text>
-<text transform="rotate(-60, 3080, 9709)" y="7800" x="2915">Δ</text>
-<text transform="rotate(-30, 3080, 9709)" y="7800" x="2932">Ε</text>
-<text transform="rotate(0, 3080, 9709)" y="7800" x="2932">Ϝ</text>
-<text transform="rotate(30, 3080, 9709)" y="7800" x="2927">Ζ</text>
-<text transform="rotate(60, 3080, 9709)" y="7800" x="2888">Η</text>
-<text transform="rotate(90, 3080, 9709)" y="7800" x="2900">Θ</text>
-<text transform="rotate(120, 3080, 9709)" y="7800" x="2982">Ι</text>
-<text transform="rotate(150, 3080, 9709)" y="7800" x="2810">ΙΑ</text>
-<text transform="rotate(180, 3080, 9709)" y="7800" x="2820">ΙΒ</text>
+<text transform="rotate(-150, 3080, 9709)" y="7800" x="2990">I</text>
+<text transform="rotate(-120, 3080, 9709)" y="7800" x="2910">II</text>
+<text transform="rotate(-90, 3080, 9709)" y="7800" x="2830">III</text>
+<text transform="rotate(-60, 3080, 9709)" y="7800" x="2800">IV</text>
+<text transform="rotate(-30, 3080, 9709)" y="7800" x="2880">V</text>
+<text transform="rotate(0, 3080, 9709)" y="7800" x="2800">VI</text>
+<text transform="rotate(30, 3080, 9709)" y="7800" x="2720">VII</text>
+<text transform="rotate(60, 3080, 9709)" y="7800" x="2570">VIII</text>
+<text transform="rotate(90, 3080, 9709)" y="7800" x="2800">IX</text>
+<text transform="rotate(120, 3080, 9709)" y="7800" x="2880">X</text>
+<text transform="rotate(150, 3080, 9709)" y="7800" x="2800">XI</text>
+<text transform="rotate(180, 3080, 9709)" y="7800" x="2700">XII</text>
 </g>
 </svg>
