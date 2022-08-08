@@ -7,33 +7,49 @@ let isSet = false;
 let isSetDay;
 let isDay;
 let weekdays = [
-  "Κυριακή",
-  "Δευτέρα",
-  "Τρίτη",
-  "Τετάρτη",
-  "Πέμπτη",
-  "Παρασκευή",
-  "Σάββατον",
+  "Herendag",
+  "Tweedag",
+  "Driedag",
+  "Vierdag",
+  "Vijfdag",
+  "Vorbereidingsdag",
+  "Sabbat",
 ]
 let months = [
-  "Νισᾶνος",
-  "Εἰᾶρος",
-  "Σιουᾶνος",
-  "Θαμμούζου",
-  "Ἀβάδος",
-  "Ἐλούλου",
-  "Θησρῖτος",
-  "Μαρσουάνου",
-  "Χασελεύου",
-  "Τηβήθου",
-  "Σαβάτεως",
-  "Ἀδᾶρος",
-  "Δευτεραδᾶρος",
+  "Twaalfmaand",
+  "Lentemaand",
+  "Tweemand",
+  "Driemand",
+  "Viermaand",
+  "Vijfmaand",
+  "Zesmaand",
+  "Zevenmaand",
+  "Achtmaand",
+  "Negenmaand",
+  "Tienmaand",
+  "Elfmaand",
+  "Schrikkelmaand",
 ];
+let arabMonths = [
+  "Moeharram",
+  "Safar",
+  "Rabi 1",
+  "Rabi 2",
+  "Djoemada 1",
+  "Djoemada 2",
+  "Radjab",
+  "Sjaban",
+  "Ramadan",
+  "Sjauwal",
+  "Doelkada",
+  "Doelhidja",
+]
 // nördliche Breite
 const phi = 47.475683 * Math.PI / 180;
+const sineInvSun = - Math.sin(Math.PI / 360);
 // Abweichung von der mittleren Zeitzone
 const delay = 1973388;
+let eqOfTime;
 let dayInYear;
 // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
 let halfDay;
@@ -70,7 +86,16 @@ function getToday(date) {
   let myMonth = date.getMonth() + 1;
   let myDay = date.getDate();
   let result = getMyDate(myYear, myMonth, myDay);
-  return [weekdays[date.getDay()] + ", ἡ " + greek(result[0]) + " τοῦ " + months[result[1] - 1], "ἔτει τῷ τοῦ κόσμου " + greek(result[2])];
+  let arabResult = getArabResult(date, result[0]);
+  return [weekdays[date.getDay()] + ", " + result[0] + "." + result[1], arabMonths[arabResult[0]] + " " + arabResult[1]];
+}
+
+function getArabResult(date, dayOfMoon) {
+  let daysSinceEpoch = date.getTime() / 86400000 + 492148 - dayOfMoon;
+  let moonsSinceEpoch = (daysSinceEpoch*360/10631).toFixed();
+  let moon = moonsSinceEpoch % 12;
+  let year = (moonsSinceEpoch / 12 + 1).toFixed();
+  return [moon, year];
 }
 
 /**
@@ -374,53 +399,53 @@ function getDate(date) {
  */
 function getGreeting() {
   let greetings = [
-    "Καλὴν ἑσπέραν",
-    "Καλὴν νύκτα",
-    "Καλὸν ὕπνον",
-    "Καλὴν αὐγήν",
-    "Καλὴν ἡμέραν",
-    "Χαῖρε",
-    "Καλὸν ἀπόγευμα",
+    "Nachtgebed",
+    "Dagsluiting",
+    "Middernacht",
+    "Morgengebed",
+    "Voormiddag",
+    "Middaggebed",
+    "Avondgebed",
   ]
   let greeting;
   let dayNightHour = isDay ? 12 : 0;
   switch (hours + dayNightHour) {
-    case 22:
-    case 23:
     case 0:
-    case 1:
       greeting = greetings[0];
+      break;
+    case 1:
+      greeting = greetings[1];
       break;
     case 2:
     case 3:
     case 4:
-      greeting = greetings[1];
-      break;
     case 5:
     case 6:
     case 7:
     case 8:
-      greeting = greetings[2];
-      break;
     case 9:
     case 10:
+      greeting = greetings[2];
+      break;
     case 11:
       greeting = greetings[3];
       break;
     case 12:
     case 13:
     case 14:
-      greeting = greetings[4];
-      break;
     case 15:
     case 16:
     case 17:
-    case 18:
-      greeting = greetings[5];
+      greeting = greetings[4];
       break;
+    case 18:
     case 19:
     case 20:
+      greeting = greetings[5];
+      break;
     case 21:
+    case 22:
+    case 23:
       greeting = greetings[6];
       break;
 
@@ -432,7 +457,11 @@ function getGreeting() {
 
 function getHalfDay(day) {
   let epsilon = 23.43 * Math.PI / 180 * Math.sin((day - 80) * Math.PI / 182.5);
-  return Math.acos(-Math.tan(epsilon) * Math.tan(phi)) * 43200000 / Math.PI;
+  return Math.acos((sineInvSun - Math.sin(epsilon) * Math.sin(phi)) /  (Math.cos(epsilon) * Math.cos(phi))) * 43200000 / Math.PI;
+}
+
+function getEqOfTime(day) {
+  return - 615600 * Math.sin(0.0337 * day + 0.465) - 442440 * Math.sin(0.01787 * day - 0.168);
 }
 
 /**
@@ -445,10 +474,11 @@ function setDate() {
   dayInYear = getDayInYear(date.getFullYear(), date.getMonth() + 1, date.getDate());
   // Länge eines Halbtags zwischen Mittag und Sonnenauf/untergang
   halfDay = getHalfDay(dayInYear);
-  sunRise = 43200000 - delay - halfDay;
-  sunSet = 43200000 - delay + halfDay;
-  sunSetBefore = 43200000 - delay + getHalfDay(dayInYear - 1);
-  sunRiseNext = 43200000 - delay - getHalfDay(dayInYear + 1);
+  eqOfTime = getEqOfTime(dayInYear);
+  sunRise = 43200000 - delay - eqOfTime - halfDay;
+  sunSet = 43200000 - delay - eqOfTime + halfDay;
+  sunSetBefore = 43200000 - delay - eqOfTime + getHalfDay(dayInYear - 1);
+  sunRiseNext = 43200000 - delay - eqOfTime - getHalfDay(dayInYear + 1);
   greekDate = getToday(date);
   mine[0].innerHTML = greekDate[0];
   mine[1].innerHTML = greekDate[1];
