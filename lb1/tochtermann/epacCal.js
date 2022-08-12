@@ -537,3 +537,30 @@ function afterSunSet() {
 }
 
 setTime();
+
+function getPrayerTimes() {
+  const gebedenTijden = new Map([
+    ['morgenGebed', sunRise + halfDay / 6],
+    ['middagGebed', sunRise + halfDay + 7200000],
+    ['avondGebed', sunRise + 3 * halfDay / 2 + 7200000],
+    ['nachtGebed', sunSet + 7200000],
+    ['dagsluiting', sunSet - halfDay / 6 + 14400000],
+  ]);
+  gebedenTijden.forEach((value, key) => {
+    console.log(key + ': ' + getTimeFromStamp(value));
+  });
+}
+
+function toFix(number, length) {
+  let numbString = parseInt(number).toString();
+  let zeroes = '0'.repeat(length - numbString.length);
+  return zeroes + numbString;
+}
+
+function to2fix(number) {
+  return toFix(number, 2);
+}
+
+function getTimeFromStamp(timeStamp) {
+  return to2fix(timeStamp / 3600000) + ':' + to2fix(timeStamp % 3600000 / 60000) + ':' + to2fix(timeStamp % 60000 / 1000);
+}
